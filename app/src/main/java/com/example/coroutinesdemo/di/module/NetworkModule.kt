@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
+import com.example.coroutinesdemo.utils.DispatchersUtil
 
 @Module
 class NetworkModule {
@@ -49,6 +50,8 @@ class NetworkModule {
     @Provides
     internal fun provideBaseUrl() = BuildConfig.BASE_URL
 
-
+    @Singleton
+    @Provides
+    internal fun provideDispatchers() = DispatchersUtil()
 
 }

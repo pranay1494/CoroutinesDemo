@@ -22,4 +22,5 @@ class BaseModule(val app : CoroutinesApp) {
     @Singleton
     @Provides
     internal fun provideGson() : Gson = Gson()
+
 }
