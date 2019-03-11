@@ -53,6 +53,7 @@ abstract class BaseFragment : Fragment(),CoroutineScope {
             when(it){
                 ViewStatus.LOADING -> progressBarContainer.visibility = View.VISIBLE
                 is ViewStatus.ERROR -> {
+                    progressBarContainer.visibility = View.GONE
                     when(it.failure){
                         is Failure.AuthenticationError -> showToast("Authentication error")
                         else -> showToast(it.failure.message)
