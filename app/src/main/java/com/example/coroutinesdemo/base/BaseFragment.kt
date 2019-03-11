@@ -52,6 +52,9 @@ abstract class BaseFragment : Fragment(),CoroutineScope {
         getViewModel().viewStatus.observe(this, Observer{
             when(it){
                 ViewStatus.LOADING -> progressBarContainer.visibility = View.VISIBLE
+                is ViewStatus.ERROR -> {
+
+                }
                 else -> progressBarContainer.visibility = View.GONE
             }
         })
