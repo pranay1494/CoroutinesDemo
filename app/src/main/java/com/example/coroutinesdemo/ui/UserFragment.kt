@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.coroutinesdemo.R
 import com.example.coroutinesdemo.base.BaseFragment
@@ -28,7 +29,15 @@ class UserFragment : BaseFragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?){
         super.onActivityCreated(savedInstanceState)
+        observeData()
         fetchData()
+    }
+
+    private fun observeData() {
+        mViewModel.getData().observe(this, Observer {
+            Log.d("current_thread",Thread.currentThread().name)
+            textView.setText(it.name)
+        })
     }
 
     fun fetchData() = launch(Dispatchers.IO){
@@ -36,7 +45,6 @@ class UserFragment : BaseFragment(){
         mViewModel.fetchUserData("pranay1494")
         withContext(Dispatchers.Main){
             Log.d("current_thread",Thread.currentThread().name)
-            textView.setText("Done")
         }
     }
 

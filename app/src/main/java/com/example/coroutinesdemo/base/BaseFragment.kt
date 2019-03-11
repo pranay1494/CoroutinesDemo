@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.coroutinesdemo.R
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -50,8 +51,8 @@ abstract class BaseFragment : Fragment(),CoroutineScope {
         super.onViewCreated(view, savedInstanceState)
         getViewModel().viewStatus.observe(this, Observer{
             when(it){
-                ViewStatus.LOADING -> Toast.makeText(context,"Loading...",Toast.LENGTH_SHORT).show()
-                else -> Toast.makeText(context,"Done",Toast.LENGTH_SHORT).show()
+                ViewStatus.LOADING -> progressBarContainer.visibility = View.VISIBLE
+                else -> progressBarContainer.visibility = View.GONE
             }
         })
     }

@@ -1,6 +1,7 @@
 package com.example.coroutinesdemo.ui
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.coroutinesdemo.api.model.User
@@ -11,6 +12,8 @@ import javax.inject.Inject
 
 class UserViewModel @Inject constructor(val repository: UserRepository) : BaseViewModel() {
     private val userData = MutableLiveData<User>()
+
+    fun getData() : LiveData<User> = userData
 
     suspend fun fetchUserData(username : String){
         viewStatus.postValue(ViewStatus.LOADING)
