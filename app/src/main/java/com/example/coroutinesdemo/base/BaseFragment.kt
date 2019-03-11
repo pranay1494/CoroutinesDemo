@@ -57,6 +57,12 @@ abstract class BaseFragment : Fragment(),CoroutineScope {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!job.isCancelled)
+            job.cancel()
+    }
+
 
 
     protected fun getViewBinding() = viewDataBinding
