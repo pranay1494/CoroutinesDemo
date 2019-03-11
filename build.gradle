@@ -38,4 +38,5 @@ ext {
     rxjavaVersion = "2.2.2"
     rxAndroidVersion = "2.1.0"
     multidexVersion = "1.0.3"
+    glideVersion = "4.8.0"
 }

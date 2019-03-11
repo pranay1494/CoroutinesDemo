@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.coroutinesdemo.R
 import com.example.coroutinesdemo.base.BaseFragment
 import com.example.coroutinesdemo.base.BaseViewModel
+import com.example.coroutinesdemo.utils.loadImage
 import kotlinx.android.synthetic.main.activity_user.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -37,6 +38,7 @@ class UserFragment : BaseFragment(){
         mViewModel.getData().observe(this, Observer {
             Log.d("current_thread",Thread.currentThread().name)
             textView.setText(it.name)
+            imageView.loadImage(it.avatarUrl)
         })
     }
 
