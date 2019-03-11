@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.coroutinesdemo.R
 import com.example.coroutinesdemo.base.BaseFragment
 import com.example.coroutinesdemo.base.BaseViewModel
+import kotlinx.android.synthetic.main.activity_user.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -30,9 +31,13 @@ class UserFragment : BaseFragment(){
         fetchData()
     }
 
-    fun fetchData() = launch{
+    fun fetchData() = launch(Dispatchers.IO){
         Log.d("current_thread",Thread.currentThread().name)
         mViewModel.fetchUserData("pranay1494")
+        withContext(Dispatchers.Main){
+            Log.d("current_thread",Thread.currentThread().name)
+            textView.setText("Done")
+        }
     }
 
     companion object {
