@@ -1,6 +1,7 @@
 package com.example.coroutinesdemo.di.module
 
 import com.example.coroutinesdemo.BuildConfig
+import com.example.coroutinesdemo.api.UserApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -19,7 +20,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    internal fun provideRetrofit(okHttpClient: OkHttpClient,callAdapter: CallAdapter.Factory,converterFactory: Converter.Factory, baseUrl : String ): Retrofit {
+    internal fun provideRetrofit(okHttpClient: OkHttpClient,callAdapter: CallAdapter.Factory,converterFactory: Converter.Factory, @Named("baseurl")baseUrl : String ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
             .addCallAdapterFactory(callAdapter)
@@ -54,4 +55,6 @@ class NetworkModule {
     @Provides
     internal fun provideDispatchers() = DispatchersUtil()
 
+    @Provides
+    internal fun provideUserApi(retrofit: Retrofit) = retrofit.create(UserApi::class.java)
 }

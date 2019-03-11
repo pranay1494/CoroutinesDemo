@@ -2,6 +2,8 @@ package com.example.coroutinesdemo
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
+import androidx.multidex.MultiDex
 import com.example.coroutinesdemo.di.component.DaggerAppComponent
 import com.example.coroutinesdemo.di.module.BaseModule
 import dagger.android.AndroidInjector
@@ -23,5 +25,10 @@ class CoroutinesApp : Application(),HasActivityInjector{
     override fun onCreate() {
         super.onCreate()
         appComponent.inject(this)
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(base)
     }
 }
