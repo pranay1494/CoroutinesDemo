@@ -1,5 +1,6 @@
 package com.example.coroutinesdemo.ui
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.coroutinesdemo.api.model.User
@@ -13,6 +14,7 @@ class UserViewModel @Inject constructor(val repository: UserRepository) : BaseVi
 
     suspend fun fetchUserData(username : String){
         viewStatus.postValue(ViewStatus.LOADING)
+        Log.d("current_thread",Thread.currentThread().name)
         val user = repository.fetchRepository(UserParams(username)).await()
         userData.postValue(user)
         viewStatus.postValue(ViewStatus.SUCCESS)

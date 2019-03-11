@@ -15,11 +15,20 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.coroutinesdemo.R
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment(),CoroutineScope {
 
     private lateinit var viewDataBinding: ViewDataBinding
+
+    private lateinit var job: Job
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     @Inject
     lateinit var mViewModelFactory : ViewModelProvider.Factory
@@ -27,6 +36,7 @@ abstract class BaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
         super.onCreate(savedInstanceState)
+        job = Job()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,6 +55,8 @@ abstract class BaseFragment : Fragment() {
             }
         })
     }
+
+
 
     protected fun getViewBinding() = viewDataBinding
     abstract fun getViewModel() : BaseViewModel

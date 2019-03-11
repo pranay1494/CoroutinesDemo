@@ -12,11 +12,7 @@ import com.example.coroutinesdemo.base.BaseViewModel
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class UserFragment : BaseFragment(),CoroutineScope{
-    private lateinit var job: Job
-
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+class UserFragment : BaseFragment(){
 
     override fun getViewModel(): BaseViewModel = mViewModel
 
@@ -35,7 +31,7 @@ class UserFragment : BaseFragment(),CoroutineScope{
     }
 
     fun fetchData() = launch{
-        Log.d("cuurent_thread",Thread.currentThread().name)
+        Log.d("current_thread",Thread.currentThread().name)
         mViewModel.fetchUserData("pranay1494")
     }
 
