@@ -53,7 +53,10 @@ abstract class BaseFragment : Fragment(),CoroutineScope {
             when(it){
                 ViewStatus.LOADING -> progressBarContainer.visibility = View.VISIBLE
                 is ViewStatus.ERROR -> {
-
+                    when(it.failure){
+                        is Failure.AuthenticationError -> showToast("Authentication error")
+                        else -> showToast(it.failure.message)
+                    }
                 }
                 else -> progressBarContainer.visibility = View.GONE
             }
@@ -66,6 +69,9 @@ abstract class BaseFragment : Fragment(),CoroutineScope {
             job.cancel()
     }
 
+    fun showToast(msg : String){
+        Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
+    }
 
 
     protected fun getViewBinding() = viewDataBinding

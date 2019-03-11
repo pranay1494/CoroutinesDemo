@@ -2,9 +2,6 @@ package com.example.coroutinesdemo.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.exceptions.CompositeException
-import io.reactivex.exceptions.Exceptions
-import io.reactivex.plugins.RxJavaPlugins
 import retrofit2.HttpException
 import java.io.IOException
 import java.lang.Exception
@@ -30,7 +27,8 @@ open class BaseViewModel : ViewModel(){
             }
             e.printStackTrace()
         } catch (e: Throwable) {
-            Exceptions.throwIfFatal(e)
+            e.printStackTrace()
+            onFailure(Failure.ServerError("Something went wrong Please try again later"))
         }
     }
 
