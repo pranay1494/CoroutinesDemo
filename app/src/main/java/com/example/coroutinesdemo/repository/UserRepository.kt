@@ -5,5 +5,5 @@ import com.example.coroutinesdemo.ui.UserViewModel
 import kotlinx.coroutines.Deferred
 
 interface UserRepository {
-    fun fetchRepository(params: UserViewModel.UserParams) : Deferred<User>
+    suspend fun fetchRepository(params: UserViewModel.UserParams) : User.DisplayData
 }

@@ -7,8 +7,9 @@ import kotlinx.coroutines.Deferred
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(val userApi: UserApi): UserRepository{
-    override fun fetchRepository(params: UserViewModel.UserParams): Deferred<User> {
-        return userApi.getUserDetails(params.name)
+    override suspend fun fetchRepository(params: UserViewModel.UserParams): User.DisplayData {
+        val user = userApi.getUserDetails(params.name).await()
+        return User.DisplayData(user.name?:"",user.avatarUrl?:"")
     }
 
 }

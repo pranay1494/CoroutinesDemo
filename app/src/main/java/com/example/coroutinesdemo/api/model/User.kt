@@ -100,4 +100,6 @@ class User {
     @Expose
     var updatedAt: String? = null
 
+    data class DisplayData(val name :String = "",val avatarUrl:String = "")
+
 }

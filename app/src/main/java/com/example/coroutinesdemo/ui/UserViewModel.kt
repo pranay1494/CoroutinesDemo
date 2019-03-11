@@ -11,15 +11,15 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class UserViewModel @Inject constructor(val repository: UserRepository) : BaseViewModel() {
-    private val userData = MutableLiveData<User>()
+    private val userData = MutableLiveData<User.DisplayData>()
 
-    fun getData(): LiveData<User> = userData
+    fun getData(): LiveData<User.DisplayData> = userData
 
     suspend fun fetchUserData(username: String) {
         viewStatus.postValue(ViewStatus.LOADING)
         try {
             Log.d("current_thread", Thread.currentThread().name)
-            val user = repository.fetchRepository(UserParams(username)).await()
+            val user = repository.fetchRepository(UserParams(username))
             userData.postValue(user)
         } catch (e: Exception) {
             handleError(e)
