@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -26,7 +27,7 @@ abstract class BaseFragment : Fragment(),CoroutineScope {
 
     private lateinit var viewDataBinding: ViewDataBinding
 
-    private lateinit var job: Job
+    private var job = SupervisorJob()
 
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
@@ -37,7 +38,6 @@ abstract class BaseFragment : Fragment(),CoroutineScope {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
         super.onCreate(savedInstanceState)
-        job = Job()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
