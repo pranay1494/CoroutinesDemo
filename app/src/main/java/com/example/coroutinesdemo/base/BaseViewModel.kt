@@ -2,16 +2,29 @@ package com.example.coroutinesdemo.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import retrofit2.HttpException
 import java.io.IOException
-import java.lang.Exception
 
 open class BaseViewModel : ViewModel(){
 
-    //observing mutablelivedata for now change it later
+    private var retry: () -> Unit = {}
+
      var viewStatus : MutableLiveData<ViewStatus> = MutableLiveData()
 
-    fun handleError(e: Exception) {
+    protected val handler = CoroutineExceptionHandler { _, throwable ->
+        handleError(throwable)
+    }
+
+    fun showLoading(){
+        viewStatus.postValue(ViewStatus.LOADING)
+    }
+
+    fun postSuccess(){
+        viewStatus.postValue(ViewStatus.SUCCESS)
+    }
+
+    fun handleError(e: Throwable) {
         try {
             if (e is HttpException) {
                 if(e.code() == 401)
@@ -32,7 +45,15 @@ open class BaseViewModel : ViewModel(){
         }
     }
 
+    private val EMPTY: () -> Unit = {}
+
+    protected fun setRetryLogicInCaseOfError(retry: () -> Unit = {}) {this.retry = retry}
+
     private fun onFailure(failure: Failure) {
+        failure.retry = retry
+        if (failure.retry != EMPTY){
+            failure.shouldShowRetryBtn = true
+        }
         viewStatus.postValue(ViewStatus.ERROR(failure))
     }
 }

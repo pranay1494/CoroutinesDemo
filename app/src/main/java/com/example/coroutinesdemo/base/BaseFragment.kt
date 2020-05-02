@@ -23,14 +23,9 @@ import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-abstract class BaseFragment : Fragment(),CoroutineScope {
+abstract class BaseFragment : Fragment() {
 
     private lateinit var viewDataBinding: ViewDataBinding
-
-    private var job = SupervisorJob()
-
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
 
     @Inject
     lateinit var mViewModelFactory : ViewModelProvider.Factory
@@ -64,16 +59,9 @@ abstract class BaseFragment : Fragment(),CoroutineScope {
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (!job.isCancelled)
-            job.cancel()
-    }
-
     fun showToast(msg : String){
         Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
     }
-
 
     protected fun getViewBinding() = viewDataBinding
     abstract fun getViewModel() : BaseViewModel

@@ -37,17 +37,14 @@ class UserFragment : BaseFragment(){
     private fun observeData() {
         mViewModel.getData().observe(this, Observer {
             Log.d("current_thread",Thread.currentThread().name)
-            textView.setText(it.name)
+            textView.text = it.name
             imageView.loadImage(it.avatarUrl)
         })
     }
 
-    fun fetchData() = launch(Dispatchers.IO){
+    fun fetchData() {
         Log.d("current_thread",Thread.currentThread().name)
         mViewModel.fetchUserData("pranay1494")
-        withContext(Dispatchers.Main){
-            Log.d("current_thread",Thread.currentThread().name)
-        }
     }
 
     companion object {

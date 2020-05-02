@@ -99,7 +99,4 @@ class User {
     @SerializedName("updated_at")
     @Expose
     var updatedAt: String? = null
-
-    data class DisplayData(val name :String = "",val avatarUrl:String = "")
-
 }

@@ -21,7 +21,7 @@ import retrofit2.HttpException
  * Base Class for handling errors/failures/exceptions.
  * Every feature specific failure should extend [FeatureFailure] class.
  */
-sealed class Failure(override var message : String = "", var retry : () -> Unit ={}) : Exception() {
+sealed class Failure(override var message : String = "", var shouldShowRetryBtn: Boolean =  false, var retry : () -> Unit ={}) : Exception() {
 
 
     class NetworkConnection(override var message : String = ""): Failure()

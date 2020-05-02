@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface UserApi {
-    @GET("users/{username}/sd")
-    fun getUserDetails(@Path("username") userName: String) : Deferred<User>
+    @GET("users/{username}")
+    fun getUserDetails(@Path("username") userName: String) : User
 }
