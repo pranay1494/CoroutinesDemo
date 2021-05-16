@@ -1,5 +1,7 @@
 package com.example.coroutinesdemo.di.module
 
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.subscription.WebSocketSubscriptionTransport
 import com.example.coroutinesdemo.BuildConfig
 import com.example.coroutinesdemo.api.UserApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -37,6 +39,14 @@ class NetworkModule {
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideApolloClient(okHttpClient: OkHttpClient, @Named("baseurl") baseUrl: String): ApolloClient =
+        ApolloClient.builder()
+            .serverUrl(baseUrl)
+            .okHttpClient(okHttpClient)
+            .build()
 
     @Singleton
     @Provides

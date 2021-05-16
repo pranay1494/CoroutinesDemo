@@ -1,8 +1,10 @@
 package com.example.coroutinesdemo.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.LaunchListQuery
 import com.example.coroutinesdemo.api.model.User
 import com.example.coroutinesdemo.base.BaseViewModel
 import com.example.coroutinesdemo.base.CoroutineDispatcherProvider
@@ -17,14 +19,18 @@ import javax.inject.Named
 
 open class UserViewModel @Inject constructor(private val repository: UserRepository, @Named("default") private val defaultDispatcher: CoroutineDispatcher) : BaseViewModel() {
     private val userData = MutableLiveData<DisplayData>()
+    private val launchData = MutableLiveData<LaunchListQuery.Data>()
 
     fun getData(): LiveData<DisplayData> = userData
+    fun getLaunchData(): LiveData<LaunchListQuery.Data> = launchData
 
     fun fetchUserData(username: String) = viewModelScope.launch(defaultDispatcher) {
         viewStatus.postValue(ViewStatus.LOADING)
         try {
             val user = repository.fetchRepository("pranay1494")
             userData.postValue(getUserDisplayData(user))
+            val data = repository.fetchLaunchData().data
+            launchData.postValue(data)
         } catch (e: Exception) {
             handleError(e)
         } finally {

@@ -5,6 +5,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
+apply plugin: "com.apollographql.apollo"
+
 
 android {
     compileSdkVersion 28
@@ -30,6 +32,11 @@ android {
             buildConfigField 'String', 'BASE_URL', '"https://api.github.com/"'
         }
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
     dataBinding{
         enabled true
     }
@@ -90,4 +97,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha02'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha02"
     testImplementation "org.mockito:mockito-core:3.3.0"
+
+
+    //apollo grahql
+    implementation("com.apollographql.apollo:apollo-runtime:$rootProject.ext.apolloGarphQl")
+    implementation("com.apollographql.apollo:apollo-coroutines-support:$rootProject.ext.apolloGarphQl")
 }

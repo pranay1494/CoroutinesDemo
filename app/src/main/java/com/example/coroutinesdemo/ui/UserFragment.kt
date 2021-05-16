@@ -40,6 +40,11 @@ class UserFragment : BaseFragment(){
             textView.text = it.name
             imageView.loadImage(it.avatarUrl)
         })
+
+
+        mViewModel.getLaunchData().observe(this, Observer {
+            Log.d("pranay",it.toString())
+        })
     }
 
     fun fetchData() {
