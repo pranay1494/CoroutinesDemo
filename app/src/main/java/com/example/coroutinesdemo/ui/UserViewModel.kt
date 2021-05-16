@@ -27,8 +27,8 @@ open class UserViewModel @Inject constructor(private val repository: UserReposit
     fun fetchUserData(username: String) = viewModelScope.launch(defaultDispatcher) {
         viewStatus.postValue(ViewStatus.LOADING)
         try {
-            val user = repository.fetchRepository("pranay1494")
-            userData.postValue(getUserDisplayData(user))
+//            val user = repository.fetchRepository("pranay1494")
+//            userData.postValue(getUserDisplayData(user))
             val data = repository.fetchLaunchData().data
             launchData.postValue(data)
         } catch (e: Exception) {

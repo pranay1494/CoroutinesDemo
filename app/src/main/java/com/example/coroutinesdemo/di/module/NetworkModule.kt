@@ -42,9 +42,9 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApolloClient(okHttpClient: OkHttpClient, @Named("baseurl") baseUrl: String): ApolloClient =
+    fun provideApolloClient(okHttpClient: OkHttpClient): ApolloClient =
         ApolloClient.builder()
-            .serverUrl(baseUrl)
+            .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com")
             .okHttpClient(okHttpClient)
             .build()
 
